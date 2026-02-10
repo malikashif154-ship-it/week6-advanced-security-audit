@@ -1,0 +1,16 @@
+version: "3.9"
+
+services:
+  juice-shop:
+    build: .
+    container_name: juice-shop-secure
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    read_only: true
+    tmpfs:
+      - /tmp
