@@ -1,0 +1,78 @@
+WEEK 6 REPORT
+Project: Juice Shop Security Audits & Deployment
+Intern: Muhammad Ali Kashif
+Week: 6 – Advanced Security Audits & Final Deployment
+
+------------------------------------------------------------
+GOAL:
+Conduct advanced security audits, ensure compliance with industry standards, 
+and prepare the application for secure deployment.
+
+------------------------------------------------------------
+TASKS COMPLETED:
+
+1. Security Audits & Compliance
+   - Conducted security audits using:
+       * OWASP ZAP – tested all endpoints and common vulnerabilities
+       * Nikto – scanned the web server for outdated components and misconfigurations
+       * Lynis – audited the server system for security compliance
+   - Checked compliance with OWASP Top 10 best practices
+
+2. Secure Deployment Practices
+   - Enabled automatic security updates and dependency scanning
+   - Followed Docker security best practices:
+       * Scanned container images using Trivy
+       * Updated vulnerable libraries
+       * Ensured secrets are not hardcoded
+   - Verified security fixes applied for critical vulnerabilities (vm2 sandbox escape, OpenSSL, etc.)
+
+3. Final Penetration Testing
+   - Performed penetration tests using Burp Suite
+   - Documented vulnerabilities, test results, and applied improvements
+   - Fixed exposed private keys, JWT tokens in frontend/backend
+
+------------------------------------------------------------
+SECURITY FINDINGS (Sample)
+
+- Trivy Docker Image Scan:
+  * Total vulnerabilities: 23 (Unknown:0, Low:12, Medium:7, High:3, Critical:1)
+  * Examples:
+    - libc6 CVE-2026-0861 (HIGH) – Heap corruption risk
+    - libssl3 CVE-2025-15467 (CRITICAL) – RCE or DoS via Initialization
+    - vm2 package vulnerabilities: CVE-2023-32314 (CRITICAL) – Sandbox escape
+  * Secrets discovered and fixed:
+    - Asymmetric Private Key in /juice-shop/lib/insecurity.ts
+    - JWT tokens in frontend spec files
+
+- OWASP ZAP & Nikto scans:
+  * Tested for SQL injection, XSS, CSRF, and security misconfigurations
+  * Applied mitigations for vulnerabilities found
+
+------------------------------------------------------------
+SECURE DEPLOYMENT:
+
+- Docker Image updated and rescanned with Trivy
+- Dependency updates applied (npm packages, system libraries)
+- Sensitive files removed or secured
+- Automatic updates enabled on server
+
+------------------------------------------------------------
+OWASP TOP 10 CHECKLIST:
+
+| #   | Category                                       | Checked? | Notes / How Tested |
+|-----|-----------------------------------------------|----------|------------------|
+| A01 | Broken Access Control                         | ✔        | Tested endpoints and role escalation with ZAP |
+| A02 | Cryptographic Failures (Sensitive Data)      | ✔        | Secured keys, JWTs, and HTTPS enforced |
+| A03 | Injection (SQL, NoSQL, Command)             | ✔        | SQLMap used; input sanitization applied |
+| A04 | Insecure Design                               | ✔        | Reviewed code design and authentication logic |
+| A05 | Security Misconfiguration                     | ✔        | Nikto & ZAP scanned server; fixed misconfigurations |
+| A06 | Vulnerable and Outdated Components           | ✔        | Trivy scan completed; updated vulnerable libraries |
+| A07 | Identification and Authentication Failures   | ✔        | Login, password reset, and JWT tested |
+| A08 | Software and Data Integrity Failures         | ✔        | Verified Docker image integrity and secure updates |
+| A09 | Security Logging and Monitoring Failures     | ✔        | Logs verified for suspicious actions |
+| A10 | SSRF / Other Vulnerabilities                  | ✔        | API endpoints tested; URL validation ensured |
+
+------------------------------------------------------------
+CONCLUSION:
+OWASP Top 10 compliance checked, and Juice Shop is secured and ready for deployment.
+
